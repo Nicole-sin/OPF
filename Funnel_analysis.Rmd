@@ -1,0 +1,297 @@
+---
+title: "OPF_Funnel"
+author: "Nicole Sin"
+date: "2023-07-26"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r echo=TRUE, eval=TRUE}
+library(googleVis)
+
+#make vectors
+plot1.from <-   c("Started application (419)"
+                  )
+plot1.to <-     c("Completed Typeform1(380)",
+                  "Did not complete Typeform1(39)")
+plot1.weight <- c(380,
+                  39)
+
+plot2.from <-   c("Completed Typeform1(380)")
+                  
+plot2.to <-     c("Completed Application(257)",
+                  "Did not complete Application(123)")
+                 
+plot2.weight <- c(257,
+                  123)
+
+plot3.from <-   c("Completed Application(257)"
+                  )
+plot3.to <-     c("Invited to Interview(251)",
+                  "Not invited to Interview(6)")
+plot3.weight <- c(251,
+                  6)
+
+plot4.from <-   c("Invited to Interview(251)")
+                  
+plot4.to <-     c("Scheduled interview(200)",
+                  "Did not schedule interview(51)")
+plot4.weight <- c(200,
+                  51)
+
+plot5.from <-   c("Scheduled interview(200)")
+                  
+plot5.to <-     c("Interviewed(177)",
+                  "Did not interview(23)")
+plot5.weight <- c(177,
+                  23)
+
+plot6.from <-   c("Interviewed(177)")
+                  
+plot6.to <-     c("Recieved Offer(170)",
+                  "Did not recieve offer(7)")
+plot6.weight <- c(170,
+                  7)
+
+plot7.from <-   c("Recieved Offer(170)")
+                  
+plot7.to <-     c("Enrolled(135)",
+                  "Did not enroll(35)")
+plot7.weight <- c(135,
+                  35)
+
+plot1.data <- data.frame(plot1.from, plot1.to, plot1.weight)
+plot2.data <- data.frame(plot2.from, plot2.to, plot2.weight)
+plot3.data <- data.frame(from = plot3.from, to = plot3.to, weight = plot3.weight)
+plot4.data <- data.frame(from = plot4.from, to = plot4.to, weight = plot4.weight)
+plot5.data <- data.frame(from = plot5.from, to = plot5.to, weight = plot5.weight)
+plot6.data <- data.frame(from = plot6.from, to = plot6.to, weight = plot6.weight)
+plot7.data <- data.frame(from = plot7.from, to = plot7.to, weight = plot7.weight)
+
+#plot
+
+plot1 <- gvisSankey(plot1.data, from="plot1.from", to="plot1.to", weight="plot1.weight",
+                    options=list(
+                      width=800,
+                      sankey="{
+                        iterations: 0,
+                        link: {colorMode: 'gradient'},
+                        node: {label: {fontName: 'Cambria', fontSize: 12, bold: true, color: '#0000000'},
+                               nodePadding: 10,
+                               colors: ['#5E2589',
+                                        '#1A237E',
+                                        '#5E2589',
+                                        '#E66400',
+                                        '#CD1F1F',
+                                        '#CD1F1F',
+                                        '#CD1F1F',
+                                        '#217227',
+                                        '#217227',
+                                        '#696969',
+                                        '#696969']}}"))
+
+colors_link <- c('#CEBDDB', '#F7D0B2', '#BCD4BE')
+colors_link_array <- paste0("[", paste0("'", colors_link,"'", collapse = ','), "]")
+colors_node <- c('#5E2589', '#5E2589', '#5E2589', '#5E2589', '#5E2589', '#5E2589', '#5E2589', '#5E2589',
+                 '#E66400', '#E66400', '#E66400', '#E66400', '#E66400', '#E66400', '#E66400', '#E66400', '#E66400', '#E66400',
+                 '#217227', '#217227', '#217227', '#217227', '#217227', '#217227')
+colors_node_array <- paste0("[", paste0("'", colors_node,"'", collapse = ','), "]")
+opts <- paste0("{iterations: 0,
+                 link: {colorMode: 'source', colors: ", colors_link_array ,"},
+                 node: {label: {fontName: 'Cambria', fontSize: 10, bold: true, color: '#0000000'},
+                        nodePadding: 10,
+                        colors: ", colors_node_array ,"}}")
+
+colnames(plot1.data) <- c("from", "to", "weight")
+colnames(plot2.data) <- c("from", "to", "weight")
+colnames(plot3.data) <- c("from", "to", "weight")
+colnames(plot4.data) <- c("from", "to", "weight")
+colnames(plot5.data) <- c("from", "to", "weight")
+colnames(plot6.data) <- c("from", "to", "weight")
+colnames(plot7.data) <- c("from", "to", "weight")
+
+# Combine the two dataframes
+combined_data <- rbind(plot1.data, plot2.data, plot3.data, plot4.data, plot5.data, plot6.data, plot7.data)
+
+
+# Create the Sankey plot
+combined_plot <- gvisSankey(combined_data, from="from", to="to", weight="weight",
+                            options=list(
+                                width=2000,
+                                sankey="{
+                                    iterations: 0,
+                                    link: {colorMode: 'gradient'},
+                                    node: {label: {fontName: 'Cambria', fontSize: 12, bold: true, color: '#0000000'},
+                                           nodePadding: 10,
+                                           colors: ['#5E2589',
+                                                    '#1A237E',
+                                                    '#5E2589',
+                                                    '#E66400',
+                                                    '#CD1F1F',
+                                                    '#CD1F1F',
+                                                    '#CD1F1F',
+                                                    '#217227',
+                                                    '#217227',
+                                                    '#696969',
+                                                    '#696969']}}"))
+
+#plot the combined plot
+plot(combined_plot)
+
+```
+
+```{r echo=TRUE, eval=TRUE}
+# Load package
+library(googleVis)
+
+# Make the vectors
+from <-   c("Started application", 
+            "Started application",
+            "Completed Typeform1",
+            "Completed Typeform1",
+            "Completed Application",
+            "Completed Application",
+            "Invited to Interview",
+            "Invited to Interview",
+            "Scheduled interview",
+            "Scheduled interview",
+            "Interviewed",
+            "Interviewed",
+            "Received Offer",
+            "Received Offer",
+            "Stage1",
+            "Stage1")
+            
+to <-     c("Completed Typeform1",
+            "Dropouts",
+            "Completed Application",
+            "Dropouts",
+            "Invited to Interview",
+            "Dropouts",
+            "Scheduled interview",
+            "Dropouts",
+            "Interviewed",
+            "Dropouts",
+            "Received Offer",
+            "Dropouts",
+            "Enrolled",
+            "Dropouts",
+            "Stage2",
+            "Dropouts")
+            
+weight <- c(380, 39, 257, 123, 251, 6, 200, 51, 177, 23, 170, 7, 135, 35, 100,10)
+
+data <- data.frame(from, to, weight)
+
+# Color the stages
+colors <- c('#5E2589', '#E66400', '#CD1F1F', '#217227', '#696969', '#FF0000')
+
+sankey_opts <- paste0("{iterations: 0,
+                        link: {colorMode: 'gradient'},
+                        node: {label: {fontName: 'Cambria', fontSize: 12, bold: true, color: '#0000000'},
+                               nodePadding: 10,
+                               colors: ", paste0("[", paste0("'", colors, "'", collapse=","), "]"), "}}")
+
+# Create the Sankey plot
+plot <- gvisSankey(data, from="from", to="to", weight="weight", 
+                   options=list(width=1600, 
+                                sankey=sankey_opts, 
+                                title = "Funnel Analysis Including Rollovers"))
+plot(plot)
+
+```
+
+
+```{r}
+library(googleVis)
+
+# Combine all data into a single dataframe from the start
+from <-   c("Started application (419)", 
+            "Completed Typeform1 (380)",
+            "Completed Application (257)",
+            "Invited to Interview (251)",
+            "Scheduled interview (200)",
+            "Interviewed (177)",
+            "Received Offer (170)")
+            
+to <-     c("Completed Typeform1(380)",
+            "Completed Application(257)",
+            "Invited to Interview(251)",
+            "Scheduled interview(200)",
+            "Interviewed(177)",
+            "Received Offer(170)",
+            "Enrolled(135)")
+            
+dropouts <- c("Dropouts(39)", "Dropouts(123)", "Dropouts(6)", "Dropouts(51)", "Dropouts(23)", "Dropouts(7)", "Dropouts(35)")
+
+weight <- c(380, 257, 251, 200, 177, 170, 135)
+dropout_weight <- c(39, 123, 6, 51, 23, 7, 35)
+
+# Combine dropout steps
+from <- c(from, from)
+to <- c(to, dropouts)
+weight <- c(weight, dropout_weight)
+
+data <- data.frame(from, to, weight)
+
+# colors
+colors <- c('#5E2589', '#E66400', '#CD1F1F', '#217227', '#696969', '#FF0000')
+
+sankey_opts <- paste0("{iterations: 0,
+                        link: {colorMode: 'gradient'},
+                        node: {label: {fontName: 'Cambria', fontSize: 12, bold: true, color: '#0000000'},
+                               nodePadding: 10,
+                               colors: ", paste0("[", paste0("'", colors, "'", collapse=","), "]"), "}}")
+
+plot <- gvisSankey(data, from="from", to="to", weight="weight")
+plot(plot)
+```
+
+```{r}
+library(googleVis)
+
+# Combine all data into a single dataframe from the start
+from <-   c("Started application (419)", 
+            "Completed Typeform1 (380)",
+            "Completed Application (257)",
+            "Invited to Interview (251)",
+            "Scheduled interview (200)",
+            "Interviewed (177)",
+            "Received Offer (170)")
+            
+to <-     c("Completed Typeform1 (380)",
+            "Completed Application (257)",
+            "Invited to Interview (251)",
+            "Scheduled interview (200)",
+            "Interviewed (177)",
+            "Received Offer (170)",
+            "Enrolled (135)")
+
+dropouts <- c("Dropouts (39)", "Dropouts (123)", "Dropouts (6)", "Dropouts (51)", "Dropouts (23)", "Dropouts (7)", "Dropouts (35)")
+
+weight <- c(380, 257, 251, 200, 177, 170, 135)
+dropout_weight <- c(39, 123, 6, 51, 23, 7, 35)
+
+# Combine dropout steps
+from <- c(from, from)
+to <- c(to, dropouts)
+weight <- c(weight, dropout_weight)
+
+data <- data.frame(from, to, weight)
+
+# Specify color
+colors <- c('#5E2589', '#E66400', '#CD1F1F', '#217227', '#696969', '#FF0000')
+
+sankey_opts <- paste0("{iterations: 0,
+                        link: {colorMode: 'gradient'},
+                        node: {label: {fontName: 'Cambria', fontSize: 12, bold: true, color: '#0000000'},
+                               nodePadding: 10,
+                               colors: ", paste0("[", paste0("'", colors, "'", collapse=","), "]"), "}}")
+
+# Create the Sankey plot
+plot <- gvisSankey(data, from="from", to="to", weight="weight", options=list(width=1700, sankey=sankey_opts))
+
+plot(plot)
+```
+
