@@ -2,7 +2,9 @@
 Sankey Key Visualization of each funnel stage at OnePointFive Academy. 3 graphs created using R to illustrate customer retention and to identify pitfalls of OPF's application process. Numbers changed to protect company privacy.
 
 Diagram 1 (Code Chunk 1): Sankey Keys Diagram excluding roll-overs from the previous cohort.
+
 Diagram 2 (Code Chunk 2): Offers an alternative format and varies visual insight.
+
 Diagram 3 (Code Chunk 3): Sankey Keys Diagram integrating roll-overs from the previous cohort.
 
 ![Sankey Key](https://github.com/Nicole-sin/OPF/blob/main/code%20chunk%201%20Sankey%20Key.png)
